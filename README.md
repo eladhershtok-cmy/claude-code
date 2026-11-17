@@ -14,3 +14,10 @@ It runs locally only (requires `uv`) and uses saved OAuth tokens — no credenti
 2. Run `claude` in this repo, approve the `garmin` project MCP server, and check `/mcp` shows it connected.
 
 Tokens last about 6 months; re-run `garmin-mcp-auth` when they expire.
+
+### Read-only tools
+
+`GARMIN_ENABLED_TOOLS` in `.mcp.json` is an allowlist of garmin_mcp's read-only tools (its `READ_ONLY_TOOLS`
+set in `tool_annotations.py`). Tools that add, edit, delete, schedule, upload or download are not registered.
+An allowlist is used rather than a denylist because `uvx` installs the latest upstream version, so new write
+tools stay disabled until added here. Names not found upstream are ignored with a warning in the server log.
