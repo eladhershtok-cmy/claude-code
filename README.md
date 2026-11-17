@@ -3,12 +3,14 @@
 ## Garmin MCP
 
 `.mcp.json` registers the [garmin_mcp](https://github.com/Taxuspt/garmin_mcp) server for Claude Code.
-It runs locally only (requires `uv`). Credentials are read from your shell environment — never commit them:
+It runs locally only (requires `uv`) and uses saved OAuth tokens — no credentials in config.
 
-```bash
-export GARMIN_EMAIL="you@example.com"
-export GARMIN_PASSWORD="..."
-claude   # approve the "garmin" project MCP server when prompted
-```
+1. Authenticate once (prompts for email, password and MFA code; saves tokens to `~/.garminconnect`):
 
-The first run may ask for an MFA code; tokens are cached locally afterwards.
+   ```bash
+   uvx --python 3.12 --from git+https://github.com/Taxuspt/garmin_mcp garmin-mcp-auth
+   ```
+
+2. Run `claude` in this repo, approve the `garmin` project MCP server, and check `/mcp` shows it connected.
+
+Tokens last about 6 months; re-run `garmin-mcp-auth` when they expire.
